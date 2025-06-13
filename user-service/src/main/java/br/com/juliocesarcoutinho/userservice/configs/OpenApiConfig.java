@@ -1,25 +1,32 @@
 package br.com.juliocesarcoutinho.userservice.configs;
+
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 @Configuration
 public class OpenApiConfig {
 
     @Bean
-    OpenAPI customOpenAPI(){
+    public OpenAPI customOpenAPI() {
         return new OpenAPI()
             .info(new Info()
-                .title("Api RestFull Loja Virtual")
-                    .version("v1")
-                    .description("Api RestFull Loja Virtual")
-                    .termsOfService("https://www.github.com/juliocesarcoutinho")
-                    .license(new License()
-                        .name("Apache 2.0")
-                        .url("https://www.github.com/juliocesarcoutinho")
-                    )
-            );
+                .title("API RestFull")
+                .version("v1")
+                .description("API RestFull with Spring Boot and microservices")
+                .termsOfService("https://www.github.com/juliocesarcoutinho")
+                .license(new License()
+                    .name("Apache 2.0")
+                    .url("https://www.github.com/juliocesarcoutinho")
+                )
+            )
+            .servers(List.of(
+                new Server().url("http://localhost:8080/user-service")
+            ));
     }
 }
