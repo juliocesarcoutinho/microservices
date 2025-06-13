@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  # Shared MySQL for all microservices
+  mysql-shared:
+    image: mysql:8.0
+    container_name: mysql-shared
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-root}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-shared-data:/var/lib/mysql
+      # Mount initialization scripts to create databases automatically
+      - ./init:/docker-entrypoint-initdb.d
+    networks:
+      - spring-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+
+networks:
+  spring-network:
+    external: true
+
+volumes:
+  mysql-shared-data:
