@@ -1,15 +1,11 @@
 package br.com.juliocesarcoutinho.userservice.resources;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import br.com.juliocesarcoutinho.userservice.dtos.AccountCredentialsDTO;
 import br.com.juliocesarcoutinho.userservice.resources.docs.AuthControllerDocs;
@@ -50,6 +46,14 @@ public class AuthController implements AuthControllerDocs {
         var token = authService.refreshToken(email, refreshToken);
         if (token == null) return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid client credentials");
         return ResponseEntity.ok().body(token);
+    }
+
+    @GetMapping("/me")
+    @PreAuthorize("isAuthenticated()")
+    @Hidden
+    public ResponseEntity<?> findMe() {
+        var user = authService.findMe();
+        return ResponseEntity.ok(user);
     }
 
     private boolean parametersAreInvalid(String email, String refreshToken) {
