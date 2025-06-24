@@ -1,4 +1,5 @@
 package br.com.juliocesarcoutinho.userservice.services;
+
 import br.com.juliocesarcoutinho.userservice.entities.User;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +48,7 @@ public class AuthService {
         if (user == null) throw new UsernameNotFoundException("Email not found" + email);
         return ResponseEntity.ok(jwtTokenProvider.refreshToken(refreshToken));
     }
-    
+
     public ResponseEntity<User> findMe() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
