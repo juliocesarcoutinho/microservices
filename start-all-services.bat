@@ -8,31 +8,31 @@ docker network create spring-network 2>nul || echo Rede ja existe.
 echo.
 echo [2/6] Iniciando infraestrutura compartilhada...
 cd shared-infrastructure
-docker-compose up -d
+docker compose up -d
 cd ..
 
 echo.
 echo [3/6] Iniciando Eureka Server...
 cd eureka-server
-docker-compose up -d
+docker compose up -d
 cd ..
 
 echo.
 echo [4/6] Iniciando API Gateway...
 cd api-gateway
-docker-compose up -d
+docker compose up -d
 cd ..
 
 echo.
 echo [5/6] Iniciando User Service...
 cd user-service
-docker-compose up -d
+docker compose up -d
 cd ..
 
 echo.
 echo [6/6] Iniciando Email Service...
 cd email-service
-docker-compose up -d
+docker compose up -d
 cd ..
 
 echo.

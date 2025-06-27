@@ -24,4 +24,4 @@ info:
   app:
     name: Eureka Server
     version: 1.0.0
-    description: Registro central de serviços do sistema de leitura de mangás
+    description: Registro central de serviços do sistema
